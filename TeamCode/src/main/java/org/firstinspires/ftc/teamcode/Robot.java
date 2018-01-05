@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * Created by Nathan Huh on 2018-01-01.
  */
 
+@TeleOp(name = "Robot", group = "Kuk")
 public class Robot {
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -64,7 +66,7 @@ public class Robot {
     }
     public void eat() {
         eatLeft.setPower(eatingPower);
-        eatRight.setPower(eatingPower);
+        eatRight.setPower(-eatingPower);
     }
     public void setEatingPower(double power) {
         eatingPower = power;

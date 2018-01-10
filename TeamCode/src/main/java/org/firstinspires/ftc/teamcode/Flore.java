@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 @Autonomous(name = "Flore", group = "Kuk")
 public class Flore extends OpMode {
     Robot robot;
-    private ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
     VuforiaLocalizer vuforia;
     public RelicRecoveryVuMark vuMark;
     public int vuMarkStatus;
@@ -70,7 +70,7 @@ public class Flore extends OpMode {
                 vuMark = RelicRecoveryVuMark.from(relicTemplate);
                 runtime.startTime();
                 runtime.reset();
-                while (runtime.time() < 3000) {
+                if (runtime.time() < 3) {
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                         telemetry.addData("VuMark", "%s visible", vuMark);
                         switch (vuMark) {
@@ -95,20 +95,19 @@ public class Flore extends OpMode {
                 break;
             case STATE_JEWEL:
                 runtime.reset();
-                while (runtime.time() < 3000) {
-                    robot.setBanzaiPower(0.6);
-                    robot.banzai();
+                if (runtime.time() < 3) {
+                    robot.aGene();
                 }
                 robot.jewel.enableLed(true);
                 if (robot.jewel.red() > robot.jewel.blue()) {
                     runtime.reset();
-                    while (runtime.time() < 3000) {
-                        robot.bernie();
+                    if (runtime.time() < 3) {
+                        robot.trump();
                     }
                 } else if (robot.jewel.blue() > robot.jewel.red()) {
                     runtime.reset();
-                    while (runtime.time() < 3000) {
-                        robot.trump();
+                    if (runtime.time() < 3) {
+                        robot.bernie();
                     }
                 }
                 robot.stop();
@@ -116,19 +115,19 @@ public class Flore extends OpMode {
                 break;
             case STATE_FIRST:
                 runtime.reset();
-                while (runtime.time() < 4000) {
-                    robot.trump();
+                if (runtime.time() < 4) {
+                    robot.bernie();
                 }
                 robot.stop();
                 runtime.reset();
-                while (runtime.time() < 4000) {
+                if (runtime.time() < 4) {
                     if (counter != vuMarkStatus) {
                         robot.columnCounter(counter);
                     }
                     if (counter == vuMarkStatus) {
                         robot.stop();
                         runtime.reset();
-                        while (runtime.time() < 3000) {
+                        if (runtime.time() < 3) {
                             robot.ford();
                         }
                         robot.strike();
@@ -138,8 +137,8 @@ public class Flore extends OpMode {
                 break;
             case STATE_SECOND_EAT:
                 runtime.reset();
-                while (runtime.time() < 5000) {
-                    robot.analGene();
+                if (runtime.time() < 5) {
+                    robot.banzai();
                     robot.eat();
                 }
                 state = State.STATE_SECOND_PUT;

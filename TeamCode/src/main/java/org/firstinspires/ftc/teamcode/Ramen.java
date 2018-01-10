@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.widget.Toast;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -10,12 +13,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-
 /**
- * Created by Nathan Huh on 2017-12-14.
+ * Created by Nathan Huh on 2018-01-07.
  */
-@Autonomous(name = "Kuk", group = "Kuk")
-public class Kuk extends LinearOpMode {
+
+@Autonomous(name = "Ramen", group = "Kuk")
+public class Ramen extends LinearOpMode {
     Robot robot;
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
     VuforiaLocalizer vuforia;
@@ -23,8 +26,7 @@ public class Kuk extends LinearOpMode {
     public int vuMarkStatus;
     public VuforiaTrackables relicTrackables;
     public VuforiaTrackable relicTemplate;
-    int counter;
-
+    int isitRed;
     public void runOpMode() throws InterruptedException {
         robot = new Robot(hardwareMap);
 
@@ -41,15 +43,20 @@ public class Kuk extends LinearOpMode {
         telemetry.addData(">", "Press Play to start");
         telemetry.update();
 
-        //robot.gyro.calibrate();
+        robot.gyro.calibrate();
         relicTrackables.activate();
         vuMarkStatus = 2000;
+        isitRed = 0;
         runtime.reset();
         vuMark = RelicRecoveryVuMark.from(relicTemplate);
         runtime.startTime();
+        robot.jongChulPark.setPosition(0.7);
+        robot.jewel.enableLed(false);
+        robot.line.enableLed(false);
+        robot.secLine.enableLed(false);
         waitForStart();
 
-        while (opModeIsActive()) {
+        while (opModeIsActive() && runtime.time() < 1) {
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 telemetry.addData("VuMark", "%s visible", vuMark);
                 switch (vuMark) {
@@ -67,51 +74,85 @@ public class Kuk extends LinearOpMode {
                 telemetry.addData("VuMark", "not visible");
             }
             telemetry.update();
-        }
-
-        robot.jongChulPark.setPosition(robot.MID_POS + 0.03);
-        sleep(1000);
-
-        while (robot.jewel.argb() < 346 && robot.jewel.argb() > 20) {
             idle();
         }
 
-        robot.banzai();
-        sleep(400);
-        robot.stop();
-
-        robot.jongChulPark.setPosition(robot.jongChulPark.MIN_POSITION);
-
-        sleep(1000);
-
-        robot.banzai();
-        sleep(1000);
-        robot.stop();
-
-        robot.turnRight();
-        sleep(720);
-        robot.stop();
-
-        //robot.vomit();
-        //sleep(1000);
-        //robot.full();
-
-        sleep(500);
-
-        robot.setAGenePower(0.15);
-        //robot.eat();
+        robot.jongChulPark.setPosition(Servo.MIN_POSITION);
         sleep(2000);
-        //robot.full();
-        robot.stop();
 
-        sleep(500);
+        if (robot.jewel.red() > 1) {
+            robot.setAGenePower(0.3);
+            sleep(100);
+            robot.stop();
+            robot.jongChulPark.setPosition(0.7);
+            robot.setBanzaiPower(0.3);
+            sleep(100);
+            robot.stop();
+        } else {
+            robot.setBanzaiPower(0.3);
+            sleep(100);
+            robot.stop();
+            robot.jongChulPark.setPosition(0.7);
+            robot.setAGenePower(0.3);
+            sleep(100);
+            robot.stop();
+        }
 
-        robot.banzai();
+        robot.setBanzaiPower(0.2);
         sleep(1500);
         robot.stop();
 
-        //robot.vomit();
-        //sleep(1000);
-        //robot.full();
+        while (opModeIsActive()) {
+            while (robot.gyro.getHeading() == 90) {
+                String text = robot.gyro.getHeading() + ".";
+                android.util.Log.i("으아아아아아아아아아아아아아아아아아아아아", text);
+                robot.stop();
+            }
+        }
+
+        robot.setBanzaiPower(0.2);
+        sleep(1500);
+        robot.stop();
+
+        if (vuMarkStatus == 3) {
+            robot.setBanzaiPower(0.1);
+            while (robot.line.red() < 3) {
+                idle();
+            }
+            robot.stop();
+        } else if (vuMarkStatus == 2) {
+            robot.setBanzaiPower(0.1);
+            while (robot.secLine.red() < 3) {
+                idle();
+            }
+            robot.stop();
+        } else if (vuMarkStatus == 1) {
+            robot.setBanzaiPower(0.1);
+            while (robot.secLine.red() < 3) {
+                idle();
+            }
+            sleep(500);
+            while (robot.secLine.red() < 3) {
+                idle();
+            }
+            robot.stop();
+        } else {
+            robot.setBanzaiPower(0.1);
+            while (robot.line.red() < 3) {
+                idle();
+            }
+            robot.stop();
+        }
+
+        sleep(500);
+
+        robot.turnRight();
+        while (opModeIsActive()) {
+            while (robot.gyro.getHeading() == 90) {
+                String text = robot.gyro.getHeading() + ".";
+                android.util.Log.i("으아아아아아아아아아아아아아아아아아아아아", text);
+                robot.stop();
+            }
+        }
     }
 }

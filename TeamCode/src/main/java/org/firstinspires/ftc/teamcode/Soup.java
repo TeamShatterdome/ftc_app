@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * Created by Nathan Huh on 2018-01-07.
  */
 
-@Autonomous(name = "Soup", group = "Kuk")
+@Autonomous(name = "Soup", group = "LinearOpMode")
 public class Soup extends LinearOpMode {
     Robot robot;
     VuforiaLocalizer vuforia;
@@ -23,7 +23,6 @@ public class Soup extends LinearOpMode {
     public int vuMarkStatus;
     public VuforiaTrackables relicTrackables;
     public VuforiaTrackable relicTemplate;
-    int heading;
     public void runOpMode() throws InterruptedException {
         robot = new Robot(hardwareMap);
 
@@ -39,21 +38,22 @@ public class Soup extends LinearOpMode {
         relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate");
 
-        telemetry.addData(">", "Press Play to start");
-        telemetry.update();
-
         robot.gyro.calibrate();
         vuMarkStatus = 2000;
         vuMark = RelicRecoveryVuMark.from(relicTemplate);
-        robot.jongChulPark.setPosition(0.67);
+        robot.jongChulPark.setPosition(0.85);
         robot.jewel.enableLed(true);
-        robot.line.enableLed(true);
-        robot.secLine.enableLed(true);
         relicTrackables.activate();
+
+        telemetry.addData("Vulture:", "Alright! Bring it on!");
+        telemetry.update();
         waitForStart();
-        while (opModeIsActive()) {
-            String text = vuMark + ".";
-            android.util.Log.i("Ssibal", text);
+        ElapsedTime runtime = new ElapsedTime();
+        runtime.reset();
+        while (opModeIsActive() && runtime.time() < 1) {
+            String text12 = vuMark + ".";
+            android.util.Log.i("Ssibal", text12);
+            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 telemetry.addData("VuMark", "%s visible", vuMark);
                 switch (vuMark) {
@@ -73,9 +73,8 @@ public class Soup extends LinearOpMode {
             telemetry.update();
             idle();
         }
-
         robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-        sleep(2000);
+        sleep(500);
 
         String text = robot.jewel.red() + ".";
         android.util.Log.i("k9", text);
@@ -88,12 +87,12 @@ public class Soup extends LinearOpMode {
             android.util.Log.i("danmuji", text3);
             robot.stop();
             robot.setAGenePower(0.3);
-            sleep(200);
+            sleep(290);
             robot.stop();
-            robot.jongChulPark.setPosition(0.67);
+            robot.jongChulPark.setPosition(0.7);
             sleep(500);
             robot.setBanzaiPower(0.3);
-            sleep(200);
+            sleep(290);
             robot.stop();
         } else {
             String text4 = robot.jewel.red() + ".";
@@ -102,63 +101,92 @@ public class Soup extends LinearOpMode {
             android.util.Log.i("jjamppong", text5);
             robot.stop();
             robot.setBanzaiPower(0.3);
-            sleep(200);
+            sleep(290);
             robot.stop();
-            robot.jongChulPark.setPosition(0.67);
+            robot.jongChulPark.setPosition(0.7);
             sleep(500);
             robot.setAGenePower(0.3);
-            sleep(200);
+            sleep(290);
             robot.stop();
         }
 
-        robot.setBanzaiPower(0.2);
-        sleep(1500);
-        robot.stop();
+        runtime.reset();
+        robot.jongChulPark.setPosition(0.3);
 
+        while (opModeIsActive() && runtime.time() < 4) {
+            while (robot.jewel.red() < 1) {
+                robot.setBanzaiPower(0.15);
+            }
+        }
+        robot.stop();
+        robot.jongChulPark.setPosition(Servo.MIN_POSITION);
         sleep(1000);
-
-        robot.bernie();
-        sleep(500);
-        robot.stop();
 
         if (vuMarkStatus == 3) {
             String text2 = vuMarkStatus + ".";
-            android.util.Log.i("low calorie", text2);
-            robot.setBanzaiPower(0.1);
-            sleep(300);
+            android.util.Log.i("Marine", text2);
+
+            sleep(500);
+
+            robot.turnRight();
+            sleep(700);
+
             robot.stop();
         } else if (vuMarkStatus == 2) {
             String text2 = vuMarkStatus + ".";
-            android.util.Log.i("moisture zzang", text2);
-            robot.setBanzaiPower(0.1);
-            sleep(600);
+            android.util.Log.i("Medic", text2);
+            robot.setBanzaiPower(0.25);
+            sleep(700);
+            robot.stop();
+
+            sleep(500);
+
+            robot.turnRight();
+            sleep(700);
             robot.stop();
         } else if (vuMarkStatus == 1) {
             String text2 = vuMarkStatus + ".";
-            android.util.Log.i("toreta", text2);
-            robot.setBanzaiPower(0.1);
-            sleep(900);
+            android.util.Log.i("Firebat", text2);
+            robot.setBanzaiPower(0.25);
+            sleep(1700);
+            robot.stop();
+
+            sleep(500);
+
+            robot.turnRight();
+            sleep(700);
             robot.stop();
         } else {
             String text2 = vuMarkStatus + ".";
-            android.util.Log.i("moisture", text2);
-            robot.setBanzaiPower(0.1);
-            sleep(300);
+            android.util.Log.i("Barrack", text2);
+
+            sleep(500);
+
+            robot.turnRight();
+            sleep(700);
+
             robot.stop();
         }
 
-        sleep(500);
-
-        robot.turnRight();
-        sleep(675);
-        robot.stop();
-
         robot.setBanzaiPower(0.2);
-        sleep(250);
+        sleep(500);
         robot.stop();
 
+        AutoVomit();
+    }
+    public void AutoVomit() {
         robot.vomit();
-        sleep(2500);
+        robot.setAGenePower(0.1);
+        sleep(1000);
+        robot.stop();
+
+        robot.setBanzaiPower(0.1);
+        sleep(1000);
+        robot.stop();
+
+        robot.setAGenePower(0.1);
+        sleep(500);
+        robot.full();
         robot.stop();
     }
 }

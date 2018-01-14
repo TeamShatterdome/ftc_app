@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * Created by Nathan Huh on 2018-01-05.
  */
 
-@Autonomous(name = "Flore", group = "Kuk")
+@Autonomous(name = "Flore", group = "LinearOpMode")
 public class Flore extends OpMode {
     Robot robot;
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
@@ -122,15 +122,12 @@ public class Flore extends OpMode {
                 runtime.reset();
                 if (runtime.time() < 4) {
                     if (counter != vuMarkStatus) {
-                        robot.columnCounter(counter);
                     }
                     if (counter == vuMarkStatus) {
                         robot.stop();
                         runtime.reset();
                         if (runtime.time() < 3) {
-                            robot.ford();
                         }
-                        robot.strike();
                         state = State.STATE_SECOND_EAT;
                     }
                 }

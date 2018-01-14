@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by Nathan Huh on 2018-01-06.
  */
 
-@Autonomous(name = "CT", group = "Kuk")
+@Autonomous(name = "CT", group = "LinearOpMode")
 public class ColumnTester extends LinearOpMode {
     ColorSensor CS;
 
@@ -20,6 +20,7 @@ public class ColumnTester extends LinearOpMode {
         telemetry.update();
 
         CS = hardwareMap.get(ColorSensor.class, "CS");
+        CS.enableLed(false);
         waitForStart();
 
         while (opModeIsActive()) {

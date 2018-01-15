@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -21,7 +23,9 @@ public class Robot {
     DcMotor eatLeft;
     DcMotor eatRight;
     DcMotor liftEat;
-    DcMotor liftRelic;
+    DcMotor liftEatBean;
+    CRServo liftRelic;
+    CRServo reLift;
     Servo lift;
     Servo grip;
     Servo jongChulPark;
@@ -40,7 +44,9 @@ public class Robot {
         eatLeft = hm.get(DcMotor.class, "eat_Left");
         eatRight = hm.get(DcMotor.class, "eat_Right");
         liftEat = hm.get(DcMotor.class, "lift_Eat");
-        liftRelic = hm.get(DcMotor.class, "lift_Relic");
+        liftEatBean = hm.get(DcMotor.class, "lift_Eat_Bean");
+        liftRelic = hm.get(CRServo.class, "lift_Relic");
+        reLift = hm.get(CRServo.class, "reLift");
         jewel = hm.get(ColorSensor.class,"jewel");
         gyro = hm.get(GyroSensor.class, "gyro");
         lift = hm.get(Servo.class, "lift");
@@ -54,6 +60,8 @@ public class Robot {
         backRight.setDirection(DcMotor.Direction.FORWARD);
         eatLeft.setDirection(DcMotor.Direction.REVERSE);
         eatRight.setDirection(DcMotor.Direction.REVERSE);
+        liftEat.setDirection(DcMotor.Direction.FORWARD);
+        liftEatBean.setDirection(DcMotor.Direction.REVERSE);
 
         eatingPower = 0.5;
         trumpPower = 0.4;
@@ -75,7 +83,7 @@ public class Robot {
 
     public void eat() {
         eatLeft.setPower(eatingPower);
-        eatRight.setPower(eatingPower);
+        eatRight.setPower(-eatingPower);
     }
     public void full() {
         eatLeft.setPower(0);
@@ -83,7 +91,7 @@ public class Robot {
     }
     public void vomit() {
         eatLeft.setPower(-eatingPower);
-        eatRight.setPower(-eatingPower);
+        eatRight.setPower(eatingPower);
     }
     public void banzai() {
         frontRight.setPower(banzaiPower);

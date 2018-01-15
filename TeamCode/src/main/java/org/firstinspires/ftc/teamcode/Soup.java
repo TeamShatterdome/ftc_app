@@ -41,7 +41,12 @@ public class Soup extends LinearOpMode {
         robot.gyro.calibrate();
         vuMarkStatus = 2000;
         vuMark = RelicRecoveryVuMark.from(relicTemplate);
-        robot.jongChulPark.setPosition(0.85);
+        robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+        robot.liftEatBean.setPower(-1);
+        robot.liftEat.setPower(-1);
+        sleep(200);
+        robot.liftEatBean.setPower(0);
+        robot.liftEat.setPower(0);
         robot.jewel.enableLed(true);
         relicTrackables.activate();
 
@@ -73,8 +78,8 @@ public class Soup extends LinearOpMode {
             telemetry.update();
             idle();
         }
-        robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-        sleep(500);
+        robot.jongChulPark.setPosition(0.666);
+        sleep(1500);
 
         String text = robot.jewel.red() + ".";
         android.util.Log.i("k9", text);
@@ -85,76 +90,60 @@ public class Soup extends LinearOpMode {
             android.util.Log.i("kimchi", text2);
             String text3 = robot.jewel.blue() + ".";
             android.util.Log.i("danmuji", text3);
-            robot.stop();
             robot.setAGenePower(0.3);
-            sleep(290);
+            sleep(310);
             robot.stop();
-            robot.jongChulPark.setPosition(0.7);
+            robot.jongChulPark.setPosition(Servo.MIN_POSITION);
             sleep(500);
             robot.setBanzaiPower(0.3);
-            sleep(290);
+            sleep(310);
             robot.stop();
-        } else {
+        } else if (robot.jewel.blue() > 1) {
             String text4 = robot.jewel.red() + ".";
             android.util.Log.i("jjajangmyeon", text4);
             String text5 = robot.jewel.blue() + ".";
             android.util.Log.i("jjamppong", text5);
-            robot.stop();
+            sleep(500);
             robot.setBanzaiPower(0.3);
-            sleep(290);
+            sleep(310);
             robot.stop();
-            robot.jongChulPark.setPosition(0.7);
+            robot.jongChulPark.setPosition(Servo.MIN_POSITION);
             sleep(500);
             robot.setAGenePower(0.3);
-            sleep(290);
+            sleep(310);
             robot.stop();
+        } else {
+            robot.jongChulPark.setPosition(Servo.MIN_POSITION);
         }
+        sleep(1200);
 
-        runtime.reset();
-        robot.jongChulPark.setPosition(0.3);
-
-        while (opModeIsActive() && runtime.time() < 4) {
-            while (robot.jewel.red() < 1) {
-                robot.setBanzaiPower(0.15);
-            }
-        }
+        robot.setBanzaiPower(0.2);
+        sleep(1750);
         robot.stop();
-        robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-        sleep(1000);
 
-        if (vuMarkStatus == 3) {
+        if (vuMarkStatus == 1) {
             String text2 = vuMarkStatus + ".";
-            android.util.Log.i("Marine", text2);
+            android.util.Log.i("Firebat", text2);
+            robot.setBanzaiPower(0.2);
+            sleep(1000);
+            robot.stop();
 
             sleep(500);
 
             robot.turnRight();
-            sleep(700);
-
+            sleep(1275);
             robot.stop();
         } else if (vuMarkStatus == 2) {
             String text2 = vuMarkStatus + ".";
             android.util.Log.i("Medic", text2);
-            robot.setBanzaiPower(0.25);
-            sleep(700);
+            robot.setBanzaiPower(0.2);
+            sleep(500);
             robot.stop();
 
             sleep(500);
 
             robot.turnRight();
-            sleep(700);
-            robot.stop();
-        } else if (vuMarkStatus == 1) {
-            String text2 = vuMarkStatus + ".";
-            android.util.Log.i("Firebat", text2);
-            robot.setBanzaiPower(0.25);
-            sleep(1700);
-            robot.stop();
-
-            sleep(500);
-
-            robot.turnRight();
-            sleep(700);
+            sleep(1275);
             robot.stop();
         } else {
             String text2 = vuMarkStatus + ".";
@@ -163,8 +152,7 @@ public class Soup extends LinearOpMode {
             sleep(500);
 
             robot.turnRight();
-            sleep(700);
-
+            sleep(1275);
             robot.stop();
         }
 

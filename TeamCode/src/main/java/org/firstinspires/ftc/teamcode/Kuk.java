@@ -69,7 +69,7 @@ public class Kuk extends LinearOpMode {
             telemetry.update();
         }
 
-        robot.jongChulPark.setPosition(robot.MID_POS + 0.03);
+        robot.jongChulPark.setPosition(0.53);
         sleep(1000);
 
         while (robot.jewel.argb() < 346 && robot.jewel.argb() > 20) {

@@ -102,12 +102,10 @@ public class Flore extends OpMode {
                 if (robot.jewel.red() > robot.jewel.blue()) {
                     runtime.reset();
                     if (runtime.time() < 3) {
-                        robot.trump();
                     }
                 } else if (robot.jewel.blue() > robot.jewel.red()) {
                     runtime.reset();
                     if (runtime.time() < 3) {
-                        robot.bernie();
                     }
                 }
                 robot.stop();
@@ -116,7 +114,6 @@ public class Flore extends OpMode {
             case STATE_FIRST:
                 runtime.reset();
                 if (runtime.time() < 4) {
-                    robot.bernie();
                 }
                 robot.stop();
                 runtime.reset();

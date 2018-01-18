@@ -17,14 +17,19 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 @Autonomous(name = "Soup", group = "LinearOpMode")
 public class Soup extends LinearOpMode {
+    // Robot class that I defined to initialize all the motors, sensors, etc.
     Robot robot;
     VuforiaLocalizer vuforia;
     public RelicRecoveryVuMark vuMark;
     public int vuMarkStatus;
     public VuforiaTrackables relicTrackables;
     public VuforiaTrackable relicTemplate;
+    boolean isRed;
+    boolean isEasy;
     public void runOpMode() throws InterruptedException {
         robot = new Robot(hardwareMap);
+        //isRed = true;
+        //isEasy = true;
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -38,7 +43,6 @@ public class Soup extends LinearOpMode {
         relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate");
 
-        robot.gyro.calibrate();
         vuMarkStatus = 2000;
         vuMark = RelicRecoveryVuMark.from(relicTemplate);
         robot.jongChulPark.setPosition(Servo.MIN_POSITION);
@@ -50,14 +54,14 @@ public class Soup extends LinearOpMode {
         robot.jewel.enableLed(true);
         relicTrackables.activate();
 
-        telemetry.addData("Vulture:", "Alright! Bring it on!");
+        telemetry.addData("Vulture", "Alright! Bring it on!");
         telemetry.update();
         waitForStart();
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
         while (opModeIsActive() && runtime.time() < 1) {
-            String text12 = vuMark + ".";
-            android.util.Log.i("Ssibal", text12);
+            String text1 = vuMark + ".";
+            android.util.Log.i("Ssibal", text1);
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 telemetry.addData("VuMark", "%s visible", vuMark);
@@ -78,6 +82,7 @@ public class Soup extends LinearOpMode {
             telemetry.update();
             idle();
         }
+
         robot.jongChulPark.setPosition(0.666);
         sleep(1500);
 
@@ -91,12 +96,15 @@ public class Soup extends LinearOpMode {
             String text3 = robot.jewel.blue() + ".";
             android.util.Log.i("danmuji", text3);
             robot.setAGenePower(0.3);
-            sleep(310);
+            sleep(350);
             robot.stop();
             robot.jongChulPark.setPosition(Servo.MIN_POSITION);
             sleep(500);
-            robot.setBanzaiPower(0.3);
-            sleep(310);
+            robot.setBanzaiPower(0.5);
+            sleep(600);
+            robot.stop();
+            robot.setAGenePower(0.3);
+            sleep(385);
             robot.stop();
         } else if (robot.jewel.blue() > 1) {
             String text4 = robot.jewel.red() + ".";
@@ -115,10 +123,11 @@ public class Soup extends LinearOpMode {
         } else {
             robot.jongChulPark.setPosition(Servo.MIN_POSITION);
         }
+
         sleep(1200);
 
         robot.setBanzaiPower(0.2);
-        sleep(1750);
+        sleep(1400);
         robot.stop();
 
         if (vuMarkStatus == 1) {
@@ -131,19 +140,19 @@ public class Soup extends LinearOpMode {
             sleep(500);
 
             robot.turnRight();
-            sleep(1275);
+            sleep(625);
             robot.stop();
         } else if (vuMarkStatus == 2) {
             String text2 = vuMarkStatus + ".";
             android.util.Log.i("Medic", text2);
             robot.setBanzaiPower(0.2);
-            sleep(500);
+            sleep(600);
             robot.stop();
 
             sleep(500);
 
             robot.turnRight();
-            sleep(1275);
+            sleep(625);
             robot.stop();
         } else {
             String text2 = vuMarkStatus + ".";
@@ -152,15 +161,21 @@ public class Soup extends LinearOpMode {
             sleep(500);
 
             robot.turnRight();
-            sleep(1275);
+            sleep(625);
             robot.stop();
         }
 
         robot.setBanzaiPower(0.2);
-        sleep(500);
+        sleep(700);
         robot.stop();
 
         AutoVomit();
+
+        robot.liftEatBean.setPower(1);
+        robot.liftEat.setPower(1);
+        sleep(200);
+        robot.liftEatBean.setPower(0);
+        robot.liftEat.setPower(0);
     }
     public void AutoVomit() {
         robot.vomit();
@@ -168,7 +183,7 @@ public class Soup extends LinearOpMode {
         sleep(1000);
         robot.stop();
 
-        robot.setBanzaiPower(0.1);
+        robot.setBanzaiPower(0.2);
         sleep(1000);
         robot.stop();
 

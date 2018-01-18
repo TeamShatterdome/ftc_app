@@ -17,8 +17,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp(name = "Robot", group = "OpMode")
 public class Robot {
     DcMotor frontLeft;
-    DcMotor frontRight;
     DcMotor backLeft;
+    DcMotor frontRight;
     DcMotor backRight;
     DcMotor eatLeft;
     DcMotor eatRight;
@@ -37,10 +37,10 @@ public class Robot {
     public double berniePower;
     public double trumpPower;
     public Robot(HardwareMap hm) {
-        frontLeft  = hm.get(DcMotor.class, "front_Left");
-        frontRight = hm.get(DcMotor.class, "front_Right");
-        backLeft = hm.get(DcMotor.class, "back_Left");
-        backRight = hm.get(DcMotor.class, "back_Right");
+        frontLeft  = hm.get(DcMotor.class, "left");
+        backLeft = hm.get(DcMotor.class, "backLeft");
+        frontRight = hm.get(DcMotor.class, "right");
+        backRight = hm.get(DcMotor.class, "backRight");
         eatLeft = hm.get(DcMotor.class, "eat_Left");
         eatRight = hm.get(DcMotor.class, "eat_Right");
         liftEat = hm.get(DcMotor.class, "lift_Eat");
@@ -55,8 +55,8 @@ public class Robot {
         i2cGyro = (ModernRoboticsI2cGyro) gyro;
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
         eatLeft.setDirection(DcMotor.Direction.REVERSE);
         eatRight.setDirection(DcMotor.Direction.REVERSE);
@@ -82,64 +82,46 @@ public class Robot {
     }
 
     public void eat() {
-        eatLeft.setPower(eatingPower);
-        eatRight.setPower(-eatingPower);
+        eatLeft.setPower(-eatingPower);
+        eatRight.setPower(eatingPower);
     }
     public void full() {
         eatLeft.setPower(0);
         eatRight.setPower(0);
     }
     public void vomit() {
-        eatLeft.setPower(-eatingPower);
-        eatRight.setPower(eatingPower);
+        eatLeft.setPower(eatingPower);
+        eatRight.setPower(-eatingPower);
     }
     public void banzai() {
         frontRight.setPower(banzaiPower);
-        frontLeft.setPower(banzaiPower);
         backRight.setPower(banzaiPower);
+        frontLeft.setPower(banzaiPower);
         backLeft.setPower(banzaiPower);
     }
     public void setBanzaiPower(double power) {
         frontRight.setPower(power);
-        frontLeft.setPower(power);
         backRight.setPower(power);
+        frontLeft.setPower(power);
         backLeft.setPower(power);
-    }
-    public void trump() {
-        frontRight.setPower(-trumpPower * 0.85 );
-        backLeft.setPower(-trumpPower * 0.85);
-        frontLeft.setPower(trumpPower * 0.8);
-        backRight.setPower(trumpPower);
-    }
-    public void setTrumpPower(double power) {
-        this.trumpPower = power;
-    }
-    public void bernie() {
-        frontRight.setPower(berniePower);
-        backLeft.setPower(berniePower);
-        frontLeft.setPower(-berniePower);
-        backRight.setPower(-berniePower);
-    }
-    public void setBerniePower(double power) {
-        this.berniePower = power;
     }
     public void stop() {
         frontRight.setPower(0);
-        frontLeft.setPower(0);
         backRight.setPower(0);
+        frontLeft.setPower(0);
         backLeft.setPower(0);
     }
     public void aGene() {
         frontRight.setPower(-1);
-        frontLeft.setPower(-1);
         backRight.setPower(-1);
+        frontLeft.setPower(-1);
         backLeft.setPower(-1);
     }
     public void setAGenePower(double power) {
         frontLeft.setPower(-power);
+        backLeft.setPower(-power);
         frontRight.setPower(-power);
         backRight.setPower(-power);
-        backLeft.setPower(-power);
     }
     public void setEatingPower(double power) {
         eatingPower = power;

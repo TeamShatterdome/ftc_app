@@ -54,6 +54,15 @@ public class Coffee extends OpMode {
         else if(gamepad1.b) {
             robot.jongChulPark.setPosition(Servo.MIN_POSITION);
         }
+        if(gamepad2.right_stick_button){
+            robot.up.setPower(1);
+        }
+        else if(gamepad2.left_stick_button){
+            robot.up.setPower(-1);
+        }
+        else{
+            robot.up.setPower(0);
+        }
     }
     public void lifting(){
         if (gamepad2.left_stick_y >= 0.8) {

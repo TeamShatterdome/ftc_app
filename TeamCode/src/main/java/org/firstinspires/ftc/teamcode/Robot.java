@@ -26,12 +26,11 @@ public class Robot {
     DcMotor liftEatBean;
     CRServo liftRelic;
     CRServo reLift;
+    CRServo up;
     Servo lift;
     Servo grip;
     Servo jongChulPark;
     ColorSensor jewel;
-    GyroSensor gyro;
-    ModernRoboticsI2cGyro i2cGyro;
     public double eatingPower;
     public double banzaiPower;
     public double berniePower;
@@ -47,12 +46,11 @@ public class Robot {
         liftEatBean = hm.get(DcMotor.class, "lift_Eat_Bean");
         liftRelic = hm.get(CRServo.class, "lift_Relic");
         reLift = hm.get(CRServo.class, "reLift");
+        up = hm.get(CRServo.class, "up");
         jewel = hm.get(ColorSensor.class,"jewel");
-        gyro = hm.get(GyroSensor.class, "gyro");
         lift = hm.get(Servo.class, "lift");
         grip = hm.get(Servo.class, "grip");
         jongChulPark = hm.get(Servo.class,"jewel_Servo");
-        i2cGyro = (ModernRoboticsI2cGyro) gyro;
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -62,6 +60,7 @@ public class Robot {
         eatRight.setDirection(DcMotor.Direction.REVERSE);
         liftEat.setDirection(DcMotor.Direction.FORWARD);
         liftEatBean.setDirection(DcMotor.Direction.REVERSE);
+        up.setDirection(CRServo.Direction.FORWARD);
 
         eatingPower = 0.5;
         trumpPower = 0.4;
@@ -69,16 +68,16 @@ public class Robot {
         berniePower = 0.4;
     }
     public void turnLeft() {
-        frontRight.setPower(1);
-        backRight.setPower(1);
-        frontLeft.setPower(-1);
-        backLeft.setPower(-1);
+        frontRight.setPower(0.6);
+        backRight.setPower(0.6);
+        frontLeft.setPower(-0.6);
+        backLeft.setPower(-0.6);
     }
     public void turnRight() {
-        frontRight.setPower(-1);
-        backRight.setPower(-1);
-        frontLeft.setPower(1);
-        backLeft.setPower(1);
+        frontRight.setPower(-0.6);
+        backRight.setPower(-0.6);
+        frontLeft.setPower(0.6);
+        backLeft.setPower(0.6);
     }
 
     public void eat() {

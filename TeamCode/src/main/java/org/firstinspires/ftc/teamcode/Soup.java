@@ -30,7 +30,9 @@ public class Soup extends LinearOpMode {
     ModernRoboticsI2cGyro gyrosensor;
     boolean isRed;
     boolean isEasy;
-    public void runOpMode() throws InterruptedException {
+    double basestart = 0.35;
+    double basepower= 0.4;
+    public void runOpMode() {
         robot = new Robot(hardwareMap);
         isRed = true;
         isEasy = true;
@@ -61,6 +63,7 @@ public class Soup extends LinearOpMode {
         gyro = hardwareMap.gyroSensor.get("gyro");
         gyrosensor = (ModernRoboticsI2cGyro) gyro;
         gyro.calibrate();
+        int heading = gyrosensor.getHeading();
 
         telemetry.addData("Vulture", "Alright! Bring it on!");
         telemetry.update();
@@ -71,278 +74,313 @@ public class Soup extends LinearOpMode {
         }
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
-        while (opModeIsActive() && runtime.time() < 1) {
-            String text1 = vuMark + ".";
-            android.util.Log.i("Ssibal", text1);
-            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
-                telemetry.addData("VuMark", "%s visible", vuMark);
-                switch (vuMark) {
-                    case LEFT:
-                        vuMarkStatus = 1;
-                        break;
-                    case CENTER:
-                        vuMarkStatus = 2;
-                        break;
-                    case RIGHT:
-                        vuMarkStatus = 3;
-                        break;
+        while (opModeIsActive()) {
+            while (opModeIsActive() && runtime.time() < 1) {
+                String text1 = vuMark + ".";
+                android.util.Log.i("Ssibal", text1);
+                RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+                if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+                    telemetry.addData("VuMark", "%s visible", vuMark);
+                    switch (vuMark) {
+                        case LEFT:
+                            vuMarkStatus = 1;
+                            break;
+                        case CENTER:
+                            vuMarkStatus = 2;
+                            break;
+                        case RIGHT:
+                            vuMarkStatus = 3;
+                            break;
+                    }
+                } else {
+                    telemetry.addData("VuMark", "not visible");
+                }
+                telemetry.update();
+                idle();
+            }
+
+            robot.jongChulPark.setPosition(0.666);
+            sleep(1500);
+
+            String text = robot.jewel.red() + ".";
+            android.util.Log.i("k9", text);
+            String text1 = robot.jewel.blue() + ".";
+            android.util.Log.i("k2a1", text1);
+            if (isRed && isEasy) {
+                if (robot.jewel.red() > 1) {
+                    String text2 = robot.jewel.red() + ".";
+                    android.util.Log.i("kimchi", text2);
+                    String text3 = robot.jewel.blue() + ".";
+                    android.util.Log.i("danmuji", text3);
+                    robot.setAGenePower(0.3);
+                    sleep(350);
+                    robot.stop();
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    sleep(500);
+                    robot.setBanzaiPower(0.5);
+                    sleep(775);
+                    robot.stop();
+                    robot.setAGenePower(0.3);
+                    sleep(475);
+                    robot.stop();
+                } else if (robot.jewel.blue() > 1) {
+                    String text4 = robot.jewel.red() + ".";
+                    android.util.Log.i("jjajangmyeon", text4);
+                    String text5 = robot.jewel.blue() + ".";
+                    android.util.Log.i("jjamppong", text5);
+                    sleep(500);
+                    robot.setBanzaiPower(0.3);
+                    sleep(700);
+                    robot.stop();
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    sleep(500);
+                    robot.setAGenePower(0.3);
+                    sleep(450);
+                    robot.stop();
+                } else {
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    robot.setBanzaiPower(0.3);
+                    sleep(700);
+                    robot.stop();
+                    sleep(500);
+                    robot.setAGenePower(0.3);
+                    sleep(450);
+                    robot.stop();
+                }
+            } else if (!isRed && isEasy) {
+                if (robot.jewel.blue() > 1) {
+                    String text2 = robot.jewel.red() + ".";
+                    android.util.Log.i("north", text2);
+                    String text3 = robot.jewel.blue() + ".";
+                    android.util.Log.i("south", text3);
+                    robot.setAGenePower(0.3);
+                    sleep(350);
+                    robot.stop();
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    sleep(500);
+                    robot.setBanzaiPower(0.5);
+                    sleep(775);
+                    robot.stop();
+                    robot.setAGenePower(0.3);
+                    sleep(475);
+                    robot.stop();
+                } else if (robot.jewel.red() > 1) {
+                    String text4 = robot.jewel.red() + ".";
+                    android.util.Log.i("west", text4);
+                    String text5 = robot.jewel.blue() + ".";
+                    android.util.Log.i("east", text5);
+                    sleep(500);
+                    robot.setBanzaiPower(0.3);
+                    sleep(700);
+                    robot.stop();
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    sleep(500);
+                    robot.setAGenePower(0.3);
+                    sleep(450);
+                    robot.stop();
+                } else {
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    robot.setBanzaiPower(0.3);
+                    sleep(700);
+                    robot.stop();
+                    sleep(500);
+                    robot.setAGenePower(0.3);
+                    sleep(450);
+                    robot.stop();
+                }
+            } else if (isRed && !isEasy) {
+                if (robot.jewel.red() > 1) {
+                    robot.setAGenePower(0.3);
+                    sleep(350);
+                    robot.stop();
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    sleep(500);
+                    robot.setBanzaiPower(0.5);
+                    sleep(775);
+                    robot.stop();
+                    robot.setAGenePower(0.3);
+                    sleep(475);
+                    robot.stop();
+                } else if (robot.jewel.blue() > 1) {
+                    sleep(500);
+                    robot.setBanzaiPower(0.3);
+                    sleep(700);
+                    robot.stop();
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    sleep(500);
+                    robot.setAGenePower(0.3);
+                    sleep(450);
+                    robot.stop();
+                } else {
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    robot.setBanzaiPower(0.3);
+                    sleep(700);
+                    robot.stop();
+                    sleep(500);
+                    robot.setAGenePower(0.3);
+                    sleep(450);
+                    robot.stop();
                 }
             } else {
-                telemetry.addData("VuMark", "not visible");
+                if (robot.jewel.red() > 1) {
+                    robot.setBanzaiPower(0.3);
+                    sleep(700);
+                    robot.stop();
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    sleep(500);
+                    robot.setAGenePower(0.3);
+                    sleep(450);
+                    robot.stop();
+                } else if (robot.jewel.blue() > 1) {
+                    robot.setAGenePower(0.3);
+                    sleep(350);
+                    robot.stop();
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    sleep(500);
+                    robot.setBanzaiPower(0.5);
+                    sleep(775);
+                    robot.stop();
+                    robot.setAGenePower(0.3);
+                    sleep(475);
+                    robot.stop();
+                } else {
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    robot.setBanzaiPower(0.3);
+                    sleep(700);
+                    robot.stop();
+                    sleep(500);
+                    robot.setAGenePower(0.3);
+                    sleep(450);
+                    robot.stop();
+                }
             }
-            telemetry.update();
-            idle();
-        }
 
-        robot.jongChulPark.setPosition(0.666);
-        sleep(1500);
+            sleep(1200);
 
-        String text = robot.jewel.red() + ".";
-        android.util.Log.i("k9", text);
-        String text1 = robot.jewel.blue() + ".";
-        android.util.Log.i("k2a1", text1);
-        if (isRed && isEasy) {
-            if (robot.jewel.red() > 1) {
-                String text2 = robot.jewel.red() + ".";
-                android.util.Log.i("kimchi", text2);
-                String text3 = robot.jewel.blue() + ".";
-                android.util.Log.i("danmuji", text3);
-                robot.setAGenePower(0.3);
-                sleep(310);
-                robot.stop();
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                sleep(500);
-                robot.setBanzaiPower(0.5);
-                sleep(700);
-                robot.stop();
-                robot.setAGenePower(0.3);
-                sleep(400);
-                robot.stop();
-            } else if (robot.jewel.blue() > 1) {
-                String text4 = robot.jewel.red() + ".";
-                android.util.Log.i("jjajangmyeon", text4);
-                String text5 = robot.jewel.blue() + ".";
-                android.util.Log.i("jjamppong", text5);
-                sleep(500);
-                robot.setBanzaiPower(0.3);
-                sleep(700);
-                robot.stop();
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                sleep(500);
-                robot.setAGenePower(0.3);
-                sleep(450);
+            if (isEasy) {
+                robot.setBanzaiPower(0.2);
+                sleep(650);
                 robot.stop();
             } else {
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                robot.setBanzaiPower(0.3);
-                sleep(700);
-                robot.stop();
+                robot.setBanzaiPower(0.2);
                 sleep(500);
-                robot.setAGenePower(0.3);
-                sleep(450);
+                robot.stop();
+
+                robot.turnLeft();
+                sleep(625);
+                robot.stop();
+
+                robot.setBanzaiPower(0.2);
+                sleep(300);
                 robot.stop();
             }
-        } else if (!isRed && isEasy) {
-            if (robot.jewel.blue() > 1) {
-                String text2 = robot.jewel.red() + ".";
-                android.util.Log.i("south", text2);
-                String text3 = robot.jewel.blue() + ".";
-                android.util.Log.i("north", text3);
-                robot.setAGenePower(0.3);
-                sleep(310);
+
+            if (vuMarkStatus == 1) {
+                String text2 = vuMarkStatus + ".";
+                android.util.Log.i("Firebat", text2);
+                robot.setBanzaiPower(0.2);
+                sleep(900);
                 robot.stop();
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+
                 sleep(500);
-                robot.setBanzaiPower(0.5);
-                sleep(700);
+
+                robot.turnRight();
+                sleep(550);
                 robot.stop();
-                robot.setAGenePower(0.3);
-                sleep(400);
-                robot.stop();
-            } else if (robot.jewel.red() > 1) {
-                String text4 = robot.jewel.red() + ".";
-                android.util.Log.i("west", text4);
-                String text5 = robot.jewel.blue() + ".";
-                android.util.Log.i("east", text5);
-                sleep(500);
-                robot.setBanzaiPower(0.3);
-                sleep(700);
-                robot.stop();
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                sleep(500);
-                robot.setAGenePower(0.3);
+            } else if (vuMarkStatus == 2) {
+                String text2 = vuMarkStatus + ".";
+                android.util.Log.i("Medic", text2);
+                robot.setBanzaiPower(0.2);
                 sleep(450);
+                robot.stop();
+
+                sleep(500);
+
+                robot.turnRight();
+                sleep(550);
                 robot.stop();
             } else {
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                robot.setBanzaiPower(0.3);
-                sleep(700);
-                robot.stop();
+                String text2 = vuMarkStatus + ".";
+                android.util.Log.i("Barrack", text2);
+
                 sleep(500);
-                robot.setAGenePower(0.3);
-                sleep(450);
+
+                robot.turnRight();
+                sleep(550);
+                robot.stop();
+
+                String text1234 = gyrosensor.getHeading() + ".";
+                android.util.Log.i("Weon", text1234);
                 robot.stop();
             }
-        } else if (isRed && !isEasy) {
-            if (robot.jewel.blue() > 1) {
-                robot.setAGenePower(0.3);
-                sleep(350);
+
+            robot.setBanzaiPower(0.2);
+            sleep(950);
+            robot.stop();
+
+            AutoVomit();
+
+            robot.liftEatBean.setPower(1);
+            robot.liftEat.setPower(1);
+            sleep(200);
+            robot.liftEatBean.setPower(0);
+            robot.liftEat.setPower(0);
+
+            if (isEasy) {
+                robot.setBanzaiPower(-basepower);
+                sleep(200);
+                //gyrosensor.calibrate();
+                //gyrosensor.resetZAxisIntegrator();
+                while (heading > 81 || heading < 79) {
+                    if(heading < 90 && heading > 70){
+                        robot.setTurnLeft(0.1);
+                    }
+                    else{
+                        robot.setTurnLeft(basestart);
+                    }
+                    heading = gyrosensor.getHeading();
+                }
+
+                //move foward
+                robot.setBanzaiPower(basepower);
+                sleep(1100);
                 robot.stop();
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                sleep(500);
-                robot.setAGenePower(0.3);
-                sleep(350);
+                //start eating
+                robot.setBanzaiPower(0.2);
+                robot.eat();
+                sleep(3000);
+                robot.full();
                 robot.stop();
-            } else if (robot.jewel.red() > 1) {
-                sleep(500);
-                robot.setBanzaiPower(0.3);
-                sleep(310);
+
+                robot.setAGenePower(basepower);
+                robot.liftEatBean.setPower(0.1);
+                robot.liftEat.setPower(0.1);
+                sleep(800);
+                robot.liftEatBean.setPower(0);
+                robot.liftEat.setPower(0);
                 robot.stop();
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                sleep(500);
-                robot.setAGenePower(0.3);
-                sleep(310);
+                sleep(200);
+                //turn back to 90 degrees
+                //gyrosensor.calibrate();
+                //gyrosensor.resetZAxisIntegrator();
+                while (heading > 291 || heading < 289) {
+                    if(heading < 300 && heading > 280){
+                        robot.setTurnRight(0.1);
+                    }
+                    else {
+                        robot.setTurnRight(basestart);
+                    }
+                    heading = gyrosensor.getHeading();
+                }
+                robot.setBanzaiPower(basepower);
+                sleep(1400);
                 robot.stop();
-            } else {
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                robot.setBanzaiPower(0.3);
-                sleep(700);
-                robot.stop();
-                sleep(500);
-                robot.setAGenePower(0.3);
-                sleep(450);
-                robot.stop();
+                sleep(200);
+                //spit out two
+                AutoVomit();
             }
-        } else {
-            if (robot.jewel.red() > 1) {
-                robot.setAGenePower(0.3);
-                sleep(350);
-                robot.stop();
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                sleep(500);
-                robot.setAGenePower(0.3);
-                sleep(350);
-                robot.stop();
-            } else if (robot.jewel.blue() > 1) {
-                sleep(500);
-                robot.setBanzaiPower(0.3);
-                sleep(310);
-                robot.stop();
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                sleep(500);
-                robot.setAGenePower(0.3);
-                sleep(310);
-                robot.stop();
-            } else {
-                robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                robot.setBanzaiPower(0.3);
-                sleep(700);
-                robot.stop();
-                sleep(500);
-                robot.setAGenePower(0.3);
-                sleep(450);
-                robot.stop();
-            }
+            break;
         }
-
-        sleep(1200);
-
-        if (isEasy) {
-            robot.setBanzaiPower(0.2);
-            sleep(500);
-            robot.stop();
-        } else {
-            robot.setBanzaiPower(0.2);
-            sleep(750);
-            robot.stop();
-
-            /*
-            while (gyrosensor.getHeading() > 271 || gyrosensor.getHeading() < 269) {
-                robot.turnRight();
-            }
-            robot.stop();
-            */
-
-            robot.turnRight();
-            sleep(625);
-            robot.stop();
-
-            robot.setBanzaiPower(0.2);
-            sleep(500);
-            robot.stop();
-        }
-
-        if (vuMarkStatus == 1) {
-            String text2 = vuMarkStatus + ".";
-            android.util.Log.i("Firebat", text2);
-            robot.setBanzaiPower(0.2);
-            sleep(1000);
-            robot.stop();
-
-            sleep(500);
-
-            /*
-            while (gyrosensor.getHeading() > 271 || gyrosensor.getHeading() < 269) {
-                robot.turnRight();
-            }
-            robot.stop();
-            */
-
-            robot.turnRight();
-            sleep(625);
-            robot.stop();
-        } else if (vuMarkStatus == 2) {
-            String text2 = vuMarkStatus + ".";
-            android.util.Log.i("Medic", text2);
-            robot.setBanzaiPower(0.2);
-            sleep(600);
-            robot.stop();
-
-            sleep(500);
-
-            while (gyrosensor.getHeading() > 271 || gyrosensor.getHeading() < 269) {
-                robot.turnRight();
-            }
-            robot.stop();
-
-            robot.turnRight();
-            sleep(625);
-            robot.stop();
-        } else {
-            String text2 = vuMarkStatus + ".";
-            android.util.Log.i("Barrack", text2);
-
-            sleep(500);
-
-
-            while (gyrosensor.getHeading() > 273 || gyrosensor.getHeading() < 268) {
-                robot.turnRight();
-            }
-            robot.stop();
-
-            /*
-            robot.turnRight();
-            sleep(625);
-            robot.stop();
-            */
-
-            String text1234 = gyrosensor.getHeading() + ".";
-            android.util.Log.i("Weon", text1234);
-            robot.stop();
-        }
-
-        robot.setBanzaiPower(0.2);
-        sleep(700);
-        robot.stop();
-
-        AutoVomit();
-
-        robot.liftEatBean.setPower(1);
-        robot.liftEat.setPower(1);
-        sleep(200);
-        robot.liftEatBean.setPower(0);
-        robot.liftEat.setPower(0);
     }
     public void AutoVomit() {
         robot.vomit();
@@ -359,4 +397,5 @@ public class Soup extends LinearOpMode {
         robot.full();
         robot.stop();
     }
+    //turn 180 degrees
 }

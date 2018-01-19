@@ -66,15 +66,15 @@ public class Coffee extends OpMode {
     }
     public void lifting(){
         if (gamepad2.left_stick_y >= 0.8) {
-            robot.liftRelic.setPower(-1);
-            robot.reLift.setPower(0.2);
+            robot.liftRelic.setPower(0.05);
+            robot.reLift.setPower(1);
         }
         else if (gamepad2.left_stick_y <= -0.8) {
-            robot.liftRelic.setPower(1);
-            robot.reLift.setPower(-0.2);
+            robot.liftRelic.setPower(-1);
+            robot.reLift.setPower(-0.05);
         }
         else {
-            robot.liftRelic.setPower(0);
+            robot.liftRelic.setPower(0.05);
             robot.reLift.setPower(0);
         }
         if (gamepad2.right_stick_y >= 0.8 || gamepad2.right_stick_y <= -0.8){

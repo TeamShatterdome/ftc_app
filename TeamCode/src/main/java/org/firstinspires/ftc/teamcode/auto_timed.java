@@ -24,7 +24,7 @@ public class auto_timed extends LinearOpMode {
     DcMotor leftlift;
     GyroSensor gyro;
     ModernRoboticsI2cGyro gyrosensor;
-    double basestart = 0.2;
+    double basestart = 0.4;
     double basepower=0.4;
     public ElapsedTime time = new ElapsedTime();
 
@@ -57,6 +57,7 @@ public class auto_timed extends LinearOpMode {
         }
 
         while (opModeIsActive()) {
+            int heading = gyrosensor.getHeading();
             time.reset();
             time.startTime();
             telemetry.addData("time", time.time());
@@ -75,20 +76,21 @@ public class auto_timed extends LinearOpMode {
             leftfront.setPower(basepower);
             rightback.setPower(basepower);
             rightfront.setPower(basepower);
-            sleep(1600);
+            sleep(1500);
             //turn 90 degrees right
 
-            while (gyrosensor.getHeading() > 91 || gyrosensor.getHeading() < 89) {
+            while (heading > 271 || heading < 269) {
                 leftback.setPower(basestart);
                 leftfront.setPower(basestart);
                 rightback.setPower(-basestart);
                 rightfront.setPower(-basestart);
+                heading = gyrosensor.getHeading();
             }
             leftback.setPower(0);
             leftfront.setPower(0);
             rightback.setPower(0);
             rightfront.setPower(0);
-            sleep(1000);
+            sleep(1200);
             //spit out one block
 
             righteating.setPower(-1);
@@ -116,19 +118,19 @@ public class auto_timed extends LinearOpMode {
             sleep(200);
             //turn 180 degrees
 
-            while (gyrosensor.getHeading() > 271 || gyrosensor.getHeading() < 269) {
+            while (heading > 91 || heading < 89) {
                 leftback.setPower(-basestart);
                 leftfront.setPower(-basestart);
                 rightback.setPower(basestart);
                 rightfront.setPower(basestart);
-
+                heading = gyrosensor.getHeading();
             }
             //move foward
             leftback.setPower(basepower);
             leftfront.setPower(basepower);
             rightback.setPower(basepower);
             rightfront.setPower(basepower);
-            sleep(1200);
+            sleep(1300);
             //eat two blocks
             leftback.setPower(0);
             leftfront.setPower(0);
@@ -164,11 +166,12 @@ public class auto_timed extends LinearOpMode {
             rightfront.setPower(0);
             sleep(200);
             //turn back to 90 degrees
-            while(gyrosensor.getHeading() > 81 || gyrosensor.getHeading() < 79){
+            while(heading > 276 || gyrosensor.getHeading() < 274)            {
                 leftback.setPower(basestart);
                 leftfront.setPower(basestart);
                 rightback.setPower(-basestart);
                 rightfront.setPower(-basestart);
+                heading = gyrosensor.getHeading();
             }
             leftback.setPower(basepower);
             leftfront.setPower(basepower);
@@ -192,7 +195,6 @@ public class auto_timed extends LinearOpMode {
             leftback.setPower(0.5);
             leftfront.setPower(0.5);
             sleep(1000);
-
             righteating.setPower(0);
             lefteating.setPower(0);
             rightback.setPower(0);
@@ -200,6 +202,12 @@ public class auto_timed extends LinearOpMode {
             leftback.setPower(0);
             leftfront.setPower(0);
             sleep(100);
+
+            rightback.setPower(-basestart);
+            rightfront.setPower(-basestart);
+            leftback.setPower(-basestart);
+            leftfront.setPower(-basestart);
+            sleep(400);
 
             break;
         }

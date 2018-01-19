@@ -73,11 +73,23 @@ public class Robot {
         frontLeft.setPower(-0.6);
         backLeft.setPower(-0.6);
     }
+    public void setTurnLeft(double power) {
+        frontRight.setPower(power);
+        backRight.setPower(power);
+        frontLeft.setPower(-power);
+        backLeft.setPower(-power);
+    }
     public void turnRight() {
         frontRight.setPower(-0.6);
         backRight.setPower(-0.6);
         frontLeft.setPower(0.6);
         backLeft.setPower(0.6);
+    }
+    public void setTurnRight(double power) {
+        frontRight.setPower(-power);
+        backRight.setPower(-power);
+        frontLeft.setPower(power);
+        backLeft.setPower(power);
     }
 
     public void eat() {

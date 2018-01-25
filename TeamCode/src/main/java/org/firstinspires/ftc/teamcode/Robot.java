@@ -25,8 +25,7 @@ public class Robot {
     DcMotor liftEat;
     DcMotor liftEatBean;
     CRServo liftRelic;
-    CRServo reLift;
-    CRServo up;
+    //CRServo reLift;
     Servo lift;
     Servo grip;
     Servo jongChulPark;
@@ -45,8 +44,7 @@ public class Robot {
         liftEat = hm.get(DcMotor.class, "lift_Eat");
         liftEatBean = hm.get(DcMotor.class, "lift_Eat_Bean");
         liftRelic = hm.get(CRServo.class, "lift_Relic");
-        reLift = hm.get(CRServo.class, "reLift");
-        up = hm.get(CRServo.class, "up");
+        //reLift = hm.get(CRServo.class, "reLift");
         jewel = hm.get(ColorSensor.class,"jewel");
         lift = hm.get(Servo.class, "lift");
         grip = hm.get(Servo.class, "grip");
@@ -60,7 +58,6 @@ public class Robot {
         eatRight.setDirection(DcMotor.Direction.REVERSE);
         liftEat.setDirection(DcMotor.Direction.FORWARD);
         liftEatBean.setDirection(DcMotor.Direction.REVERSE);
-        up.setDirection(CRServo.Direction.FORWARD);
 
         eatingPower = 0.5;
         trumpPower = 0.4;

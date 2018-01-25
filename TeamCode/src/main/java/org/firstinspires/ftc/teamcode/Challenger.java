@@ -17,8 +17,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * Created by Nathan Huh on 2018-01-07.
  */
 
-@Autonomous(name = "Soup", group = "LinearOpMode")
-public class Soup extends LinearOpMode {
+@Autonomous(name = "Challenger", group = "LinearOpMode")
+public class Challenger extends LinearOpMode {
     // Robot class that I defined to initialize all the motors, sensors, etc.
     Robot robot;
     VuforiaLocalizer vuforia;
@@ -37,7 +37,7 @@ public class Soup extends LinearOpMode {
         robot = new Robot(hardwareMap);
         isRed = false;
         isEasy = true;
-        isChallenge = false;
+        isChallenge = true;
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -109,7 +109,7 @@ public class Soup extends LinearOpMode {
             String text1 = robot.jewel.blue() + ".";
             android.util.Log.i("k2a1", text1);
             if (isRed && isEasy) {
-                if (robot.jewel.red() > robot.jewel.blue()) {
+                if (robot.jewel.red() > 1) {
                     String text2 = robot.jewel.red() + ".";
                     android.util.Log.i("kimchi", text2);
                     String text3 = robot.jewel.blue() + ".";
@@ -125,7 +125,7 @@ public class Soup extends LinearOpMode {
                     robot.setAGenePower(0.3);
                     sleep(475);
                     robot.stop();
-                } else if (robot.jewel.blue() > robot.jewel.red()) {
+                } else if (robot.jewel.blue() > 1) {
                     String text4 = robot.jewel.red() + ".";
                     android.util.Log.i("jjajangmyeon", text4);
                     String text5 = robot.jewel.blue() + ".";
@@ -150,47 +150,11 @@ public class Soup extends LinearOpMode {
                     robot.stop();
                 }
             } else if (!isRed && isEasy) {
-                if (robot.jewel.blue() > robot.jewel.red()) {
+                if (robot.jewel.blue() > 1) {
                     String text2 = robot.jewel.red() + ".";
                     android.util.Log.i("north", text2);
                     String text3 = robot.jewel.blue() + ".";
                     android.util.Log.i("south", text3);
-                    robot.setAGenePower(0.3);
-                    sleep(700);
-                    robot.stop();
-                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                    sleep(500);
-                    robot.setBanzaiPower(0.5);
-                    sleep(450);
-                    robot.stop();
-                } else if (robot.jewel.red() > robot.jewel.blue()) {
-                    String text4 = robot.jewel.red() + ".";
-                    android.util.Log.i("west", text4);
-                    String text5 = robot.jewel.blue() + ".";
-                    android.util.Log.i("east", text5);
-                    robot.setBanzaiPower(0.3);
-                    sleep(350);
-                    robot.stop();
-                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                    sleep(500);
-                    robot.setAGenePower(0.5);
-                    sleep(1600);
-                    robot.stop();
-                    robot.setBanzaiPower(0.3);
-                    sleep(475);
-                    robot.stop();
-                } else {
-                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                    robot.setAGenePower(0.3);
-                    sleep(700);
-                    robot.stop();
-                    sleep(500);
-                    robot.setBanzaiPower(0.5);
-                    sleep(450);
-                    robot.stop();
-                }
-            } else if (isRed && !isEasy) {
-                if (robot.jewel.red() > robot.jewel.blue()) {
                     robot.setAGenePower(0.3);
                     sleep(350);
                     robot.stop();
@@ -202,7 +166,44 @@ public class Soup extends LinearOpMode {
                     robot.setAGenePower(0.3);
                     sleep(475);
                     robot.stop();
-                } else if (robot.jewel.blue() > robot.jewel.red()) {
+                } else if (robot.jewel.red() > 1) {
+                    String text4 = robot.jewel.red() + ".";
+                    android.util.Log.i("west", text4);
+                    String text5 = robot.jewel.blue() + ".";
+                    android.util.Log.i("east", text5);
+                    sleep(500);
+                    robot.setBanzaiPower(0.3);
+                    sleep(700);
+                    robot.stop();
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    sleep(500);
+                    robot.setAGenePower(0.3);
+                    sleep(450);
+                    robot.stop();
+                } else {
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    robot.setBanzaiPower(0.3);
+                    sleep(700);
+                    robot.stop();
+                    sleep(500);
+                    robot.setAGenePower(0.3);
+                    sleep(450);
+                    robot.stop();
+                }
+            } else if (isRed && !isEasy) {
+                if (robot.jewel.red() > 1) {
+                    robot.setAGenePower(0.3);
+                    sleep(350);
+                    robot.stop();
+                    robot.jongChulPark.setPosition(Servo.MIN_POSITION);
+                    sleep(500);
+                    robot.setBanzaiPower(0.5);
+                    sleep(775);
+                    robot.stop();
+                    robot.setAGenePower(0.3);
+                    sleep(475);
+                    robot.stop();
+                } else if (robot.jewel.blue() > 1) {
                     sleep(500);
                     robot.setBanzaiPower(0.3);
                     sleep(700);
@@ -223,42 +224,34 @@ public class Soup extends LinearOpMode {
                     robot.stop();
                 }
             } else {
-                if (robot.jewel.blue() > robot.jewel.red()) {
-                    String text2 = robot.jewel.red() + ".";
-                    android.util.Log.i("north", text2);
-                    String text3 = robot.jewel.blue() + ".";
-                    android.util.Log.i("south", text3);
-                    robot.setAGenePower(0.3);
+                if (robot.jewel.red() > 1) {
+                    robot.setBanzaiPower(0.3);
                     sleep(700);
                     robot.stop();
                     robot.jongChulPark.setPosition(Servo.MIN_POSITION);
                     sleep(500);
-                    robot.setBanzaiPower(0.5);
+                    robot.setAGenePower(0.3);
                     sleep(450);
                     robot.stop();
-                } else if (robot.jewel.red() > robot.jewel.blue()) {
-                    String text4 = robot.jewel.red() + ".";
-                    android.util.Log.i("west", text4);
-                    String text5 = robot.jewel.blue() + ".";
-                    android.util.Log.i("east", text5);
-                    robot.setBanzaiPower(0.3);
+                } else if (robot.jewel.blue() > 1) {
+                    robot.setAGenePower(0.3);
                     sleep(350);
                     robot.stop();
                     robot.jongChulPark.setPosition(Servo.MIN_POSITION);
                     sleep(500);
-                    robot.setAGenePower(0.5);
-                    sleep(1600);
+                    robot.setBanzaiPower(0.5);
+                    sleep(775);
                     robot.stop();
-                    robot.setBanzaiPower(0.3);
+                    robot.setAGenePower(0.3);
                     sleep(475);
                     robot.stop();
                 } else {
                     robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-                    robot.setAGenePower(0.3);
+                    robot.setBanzaiPower(0.3);
                     sleep(700);
                     robot.stop();
                     sleep(500);
-                    robot.setBanzaiPower(0.5);
+                    robot.setAGenePower(0.3);
                     sleep(450);
                     robot.stop();
                 }
@@ -266,28 +259,12 @@ public class Soup extends LinearOpMode {
 
             sleep(1200);
 
-            if (isEasy && isRed) {
+            if (isEasy) {
                 robot.setBanzaiPower(0.2);
                 sleep(650);
-                robot.stop();
-            } else if (isEasy && !isRed) {
-                robot.setAGenePower(0.2);
-                sleep(650);
-                robot.stop();
-            } else if (!isEasy && isRed) {
-                robot.setBanzaiPower(0.2);
-                sleep(500);
-                robot.stop();
-
-                robot.turnLeft();
-                sleep(625);
-                robot.stop();
-
-                robot.setBanzaiPower(0.2);
-                sleep(300);
                 robot.stop();
             } else {
-                robot.setAGenePower(0.2);
+                robot.setBanzaiPower(0.2);
                 sleep(500);
                 robot.stop();
 
@@ -300,7 +277,7 @@ public class Soup extends LinearOpMode {
                 robot.stop();
             }
 
-            if (vuMarkStatus == 1 && isRed) {
+            if (vuMarkStatus == 1) {
                 String text2 = vuMarkStatus + ".";
                 android.util.Log.i("Firebat", text2);
                 robot.setBanzaiPower(0.2);
@@ -312,44 +289,10 @@ public class Soup extends LinearOpMode {
                 robot.turnRight();
                 sleep(550);
                 robot.stop();
-            } else if (vuMarkStatus == 2 && isRed) {
+            } else if (vuMarkStatus == 2) {
                 String text2 = vuMarkStatus + ".";
                 android.util.Log.i("Medic", text2);
                 robot.setBanzaiPower(0.2);
-                sleep(450);
-                robot.stop();
-
-                sleep(500);
-
-                robot.turnRight();
-                sleep(550);
-                robot.stop();
-            } else if (vuMarkStatus == 3 && isRed) {
-                String text2 = vuMarkStatus + ".";
-                android.util.Log.i("Barrack", text2);
-
-                sleep(500);
-
-                robot.turnRight();
-                sleep(550);
-                robot.stop();
-
-                String text1234 = gyrosensor.getHeading() + ".";
-                android.util.Log.i("Weon", text1234);
-                robot.stop();
-            } else if (vuMarkStatus == 1 && !isRed) {
-                String text2 = vuMarkStatus + ".";
-                android.util.Log.i("Firebat", text2);
-
-                sleep(500);
-
-                robot.turnRight();
-                sleep(550);
-                robot.stop();
-            } else if (vuMarkStatus == 2 && !isRed) {
-                String text2 = vuMarkStatus + ".";
-                android.util.Log.i("Medic", text2);
-                robot.setAGenePower(0.2);
                 sleep(450);
                 robot.stop();
 
@@ -361,9 +304,6 @@ public class Soup extends LinearOpMode {
             } else {
                 String text2 = vuMarkStatus + ".";
                 android.util.Log.i("Barrack", text2);
-                robot.setAGenePower(0.2);
-                sleep(900);
-                robot.stop();
 
                 sleep(500);
 

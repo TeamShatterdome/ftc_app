@@ -3,17 +3,20 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="Coffee", group="OpMode")
 public class Coffee extends OpMode {
     Robot robot;
+
+    public ElapsedTime time= new ElapsedTime();
 
     @Override
     public void init(){
         robot = new Robot(hardwareMap);
 
         robot.jongChulPark.setPosition(Servo.MIN_POSITION);
-        robot.grip.setPosition(1);
+        //robot.grip.setPosition(1);
         robot.lift.setPosition(0.45);
     }
     public void mechanum(){
@@ -54,28 +57,16 @@ public class Coffee extends OpMode {
         else if(gamepad1.b) {
             robot.jongChulPark.setPosition(Servo.MIN_POSITION);
         }
-        if(gamepad2.right_stick_button){
-            robot.up.setPower(1);
-        }
-        else if(gamepad2.left_stick_button){
-            robot.up.setPower(-1);
-        }
-        else{
-            robot.up.setPower(0);
-        }
     }
     public void lifting(){
         if (gamepad2.left_stick_y >= 0.8) {
-            robot.liftRelic.setPower(0.05);
-            robot.reLift.setPower(1);
+            robot.liftRelic.setPower(1);
         }
         else if (gamepad2.left_stick_y <= -0.8) {
             robot.liftRelic.setPower(-1);
-            robot.reLift.setPower(-0.05);
         }
         else {
-            robot.liftRelic.setPower(0.05);
-            robot.reLift.setPower(0);
+            robot.liftRelic.setPower(0);
         }
         if (gamepad2.right_stick_y >= 0.8 || gamepad2.right_stick_y <= -0.8){
             robot.liftEat.setPower(gamepad2.right_stick_y);
@@ -86,7 +77,7 @@ public class Coffee extends OpMode {
         }
     }
 
-    public void relic(){
+    public void relic() {
         if (gamepad2.left_bumper) {
             robot.grip.setPosition(0.3);
             robot.lift.setPosition(0.45);
@@ -101,6 +92,25 @@ public class Coffee extends OpMode {
         else {
             robot.grip.setPosition(1);
             robot.lift.setPosition(0.45);
+        }
+
+        while(gamepad2.b){
+            time.reset();
+            time.startTime();
+
+            while(time.time() < 1.1){
+                robot.grip.setPosition(0.3);
+                robot.lift.setPosition(1);
+            }
+            while(time.time() > 1 && time.time() < 1.4){
+                robot.grip.setPosition(0.3);
+                robot.lift.setPosition(0.45);
+            }
+            while(time.time() > 1.3){
+                robot.grip.setPosition(1);
+                robot.lift.setPosition(1);
+            }
+            break;
         }
     }
 

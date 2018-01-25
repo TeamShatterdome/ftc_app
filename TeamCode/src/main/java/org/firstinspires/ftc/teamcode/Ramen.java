@@ -30,12 +30,12 @@ public class Ramen extends LinearOpMode {
     ModernRoboticsI2cGyro gyrosensor;
     boolean isRed;
     boolean isEasy;
-    double basestart = 0.4;
-    double basepower=0.4;
+    double basestart = 0.35;
+    double basepower= 0.4;
     public void runOpMode() {
         robot = new Robot(hardwareMap);
         isRed = false;
-        isEasy = true;
+        isEasy = false;
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -263,7 +263,7 @@ public class Ramen extends LinearOpMode {
                 robot.stop();
             } else {
                 robot.setBanzaiPower(0.2);
-                sleep(750);
+                sleep(500);
                 robot.stop();
 
                 robot.turnLeft();
@@ -279,25 +279,25 @@ public class Ramen extends LinearOpMode {
                 String text2 = vuMarkStatus + ".";
                 android.util.Log.i("Firebat", text2);
                 robot.setBanzaiPower(0.2);
-                sleep(1000);
+                sleep(900);
                 robot.stop();
 
                 sleep(500);
 
                 robot.turnRight();
-                sleep(625);
+                sleep(550);
                 robot.stop();
             } else if (vuMarkStatus == 2) {
                 String text2 = vuMarkStatus + ".";
                 android.util.Log.i("Medic", text2);
                 robot.setBanzaiPower(0.2);
-                sleep(600);
+                sleep(450);
                 robot.stop();
 
                 sleep(500);
 
                 robot.turnRight();
-                sleep(625);
+                sleep(550);
                 robot.stop();
             } else {
                 String text2 = vuMarkStatus + ".";
@@ -306,7 +306,7 @@ public class Ramen extends LinearOpMode {
                 sleep(500);
 
                 robot.turnRight();
-                sleep(625);
+                sleep(550);
                 robot.stop();
 
                 String text1234 = gyrosensor.getHeading() + ".";
@@ -315,7 +315,7 @@ public class Ramen extends LinearOpMode {
             }
 
             robot.setBanzaiPower(0.2);
-            sleep(700);
+            sleep(950);
             robot.stop();
 
             AutoVomit();
@@ -325,6 +325,53 @@ public class Ramen extends LinearOpMode {
             sleep(200);
             robot.liftEatBean.setPower(0);
             robot.liftEat.setPower(0);
+
+            if (isEasy) {
+                robot.setAGenePower(basepower);
+                sleep(200);
+                robot.stop();
+                //gyrosensor.calibrate();
+                //gyrosensor.resetZAxisIntegrator();
+                while (heading > 81 || heading < 79) {
+                    if (heading < 90 && heading > 70) {
+                        robot.setTurnLeft(0.1);
+                    }
+                    else {
+                        robot.setTurnLeft(basestart);
+                    }
+                    heading = gyrosensor.getHeading();
+                }
+
+                //move foward
+                robot.setBanzaiPower(basepower);
+                sleep(1100);
+                robot.stop();
+                //start eating
+                robot.setBanzaiPower(0.2);
+                robot.eat();
+                sleep(3000);
+                robot.full();
+                robot.stop();
+
+                //turn back to 90 degrees
+                //gyrosensor.calibrate();
+                //gyrosensor.resetZAxisIntegrator();
+                while (heading > 291 || heading < 289) {
+                    if (heading < 300 && heading > 280) {
+                        robot.setTurnRight(0.1);
+                    }
+                    else {
+                        robot.setTurnRight(basestart);
+                    }
+                    heading = gyrosensor.getHeading();
+                }
+                robot.setBanzaiPower(basepower);
+                sleep(1400);
+                robot.stop();
+                //spit out two
+                AutoVomit();
+            }
+            break;
         }
     }
     public void AutoVomit() {

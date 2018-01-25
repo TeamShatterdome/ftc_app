@@ -33,11 +33,13 @@ public class Soup extends LinearOpMode {
     boolean isChallenge;
     double basestart = 0.35;
     double basepower= 0.4;
+    int ninety;
     public void runOpMode() {
         robot = new Robot(hardwareMap);
-        isRed = false;
+        isRed = true;
         isEasy = true;
         isChallenge = false;
+        ninety = 650;
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
@@ -110,26 +112,19 @@ public class Soup extends LinearOpMode {
             android.util.Log.i("k2a1", text1);
             if (isRed && isEasy) {
                 if (robot.jewel.red() > robot.jewel.blue()) {
-                    String text2 = robot.jewel.red() + ".";
-                    android.util.Log.i("kimchi", text2);
-                    String text3 = robot.jewel.blue() + ".";
-                    android.util.Log.i("danmuji", text3);
-                    robot.setAGenePower(0.3);
-                    sleep(350);
+                    robot.setAGenePower(0.2);
+                    sleep(300);
                     robot.stop();
                     robot.jongChulPark.setPosition(Servo.MIN_POSITION);
                     sleep(500);
                     robot.setBanzaiPower(0.5);
-                    sleep(775);
+                    sleep(825);
                     robot.stop();
+                    sleep(500);
                     robot.setAGenePower(0.3);
-                    sleep(475);
+                    sleep(525);
                     robot.stop();
                 } else if (robot.jewel.blue() > robot.jewel.red()) {
-                    String text4 = robot.jewel.red() + ".";
-                    android.util.Log.i("jjajangmyeon", text4);
-                    String text5 = robot.jewel.blue() + ".";
-                    android.util.Log.i("jjamppong", text5);
                     sleep(500);
                     robot.setBanzaiPower(0.3);
                     sleep(700);
@@ -151,10 +146,6 @@ public class Soup extends LinearOpMode {
                 }
             } else if (!isRed && isEasy) {
                 if (robot.jewel.blue() > robot.jewel.red()) {
-                    String text2 = robot.jewel.red() + ".";
-                    android.util.Log.i("north", text2);
-                    String text3 = robot.jewel.blue() + ".";
-                    android.util.Log.i("south", text3);
                     robot.setAGenePower(0.3);
                     sleep(700);
                     robot.stop();
@@ -164,10 +155,6 @@ public class Soup extends LinearOpMode {
                     sleep(450);
                     robot.stop();
                 } else if (robot.jewel.red() > robot.jewel.blue()) {
-                    String text4 = robot.jewel.red() + ".";
-                    android.util.Log.i("west", text4);
-                    String text5 = robot.jewel.blue() + ".";
-                    android.util.Log.i("east", text5);
                     robot.setBanzaiPower(0.3);
                     sleep(350);
                     robot.stop();
@@ -191,16 +178,17 @@ public class Soup extends LinearOpMode {
                 }
             } else if (isRed && !isEasy) {
                 if (robot.jewel.red() > robot.jewel.blue()) {
-                    robot.setAGenePower(0.3);
-                    sleep(350);
+                    robot.setAGenePower(0.2);
+                    sleep(300);
                     robot.stop();
                     robot.jongChulPark.setPosition(Servo.MIN_POSITION);
                     sleep(500);
                     robot.setBanzaiPower(0.5);
-                    sleep(775);
+                    sleep(825);
                     robot.stop();
+                    sleep(500);
                     robot.setAGenePower(0.3);
-                    sleep(475);
+                    sleep(525);
                     robot.stop();
                 } else if (robot.jewel.blue() > robot.jewel.red()) {
                     sleep(500);
@@ -224,12 +212,8 @@ public class Soup extends LinearOpMode {
                 }
             } else {
                 if (robot.jewel.blue() > robot.jewel.red()) {
-                    String text2 = robot.jewel.red() + ".";
-                    android.util.Log.i("north", text2);
-                    String text3 = robot.jewel.blue() + ".";
-                    android.util.Log.i("south", text3);
                     robot.setAGenePower(0.3);
-                    sleep(700);
+                    sleep(1000);
                     robot.stop();
                     robot.jongChulPark.setPosition(Servo.MIN_POSITION);
                     sleep(500);
@@ -237,10 +221,6 @@ public class Soup extends LinearOpMode {
                     sleep(450);
                     robot.stop();
                 } else if (robot.jewel.red() > robot.jewel.blue()) {
-                    String text4 = robot.jewel.red() + ".";
-                    android.util.Log.i("west", text4);
-                    String text5 = robot.jewel.blue() + ".";
-                    android.util.Log.i("east", text5);
                     robot.setBanzaiPower(0.3);
                     sleep(350);
                     robot.stop();
@@ -255,7 +235,7 @@ public class Soup extends LinearOpMode {
                 } else {
                     robot.jongChulPark.setPosition(Servo.MIN_POSITION);
                     robot.setAGenePower(0.3);
-                    sleep(700);
+                    sleep(1000);
                     robot.stop();
                     sleep(500);
                     robot.setBanzaiPower(0.5);
@@ -280,7 +260,7 @@ public class Soup extends LinearOpMode {
                 robot.stop();
 
                 robot.turnLeft();
-                sleep(625);
+                sleep(ninety);
                 robot.stop();
 
                 robot.setBanzaiPower(0.2);
@@ -292,7 +272,7 @@ public class Soup extends LinearOpMode {
                 robot.stop();
 
                 robot.turnLeft();
-                sleep(625);
+                sleep(ninety);
                 robot.stop();
 
                 robot.setBanzaiPower(0.2);
@@ -310,7 +290,7 @@ public class Soup extends LinearOpMode {
                 sleep(500);
 
                 robot.turnRight();
-                sleep(550);
+                sleep(ninety);
                 robot.stop();
             } else if (vuMarkStatus == 2 && isRed) {
                 String text2 = vuMarkStatus + ".";
@@ -322,7 +302,7 @@ public class Soup extends LinearOpMode {
                 sleep(500);
 
                 robot.turnRight();
-                sleep(550);
+                sleep(ninety);
                 robot.stop();
             } else if (vuMarkStatus == 3 && isRed) {
                 String text2 = vuMarkStatus + ".";
@@ -331,7 +311,7 @@ public class Soup extends LinearOpMode {
                 sleep(500);
 
                 robot.turnRight();
-                sleep(550);
+                sleep(ninety);
                 robot.stop();
 
                 String text1234 = gyrosensor.getHeading() + ".";
@@ -342,38 +322,49 @@ public class Soup extends LinearOpMode {
                 android.util.Log.i("Firebat", text2);
 
                 sleep(500);
-
-                robot.turnRight();
-                sleep(550);
-                robot.stop();
             } else if (vuMarkStatus == 2 && !isRed) {
                 String text2 = vuMarkStatus + ".";
                 android.util.Log.i("Medic", text2);
-                robot.setAGenePower(0.2);
+                robot.setBanzaiPower(0.2);
                 sleep(450);
                 robot.stop();
 
                 sleep(500);
-
-                robot.turnRight();
-                sleep(550);
-                robot.stop();
-            } else {
+            } else if (vuMarkStatus == 3 && !isRed) {
                 String text2 = vuMarkStatus + ".";
                 android.util.Log.i("Barrack", text2);
-                robot.setAGenePower(0.2);
+                robot.setBanzaiPower(0.2);
                 sleep(900);
                 robot.stop();
 
                 sleep(500);
 
-                robot.turnRight();
-                sleep(550);
-                robot.stop();
-
                 String text1234 = gyrosensor.getHeading() + ".";
                 android.util.Log.i("Weon", text1234);
                 robot.stop();
+            } else if (!isRed) {
+                robot.setBanzaiPower(0.2);
+                sleep(900);
+                robot.stop();
+
+                sleep(500);
+            } else {
+                sleep(500);
+
+                robot.turnRight();
+                sleep(ninety);
+                robot.stop();
+            }
+            if (!isRed) {
+                if (isEasy) {
+                    robot.turnRight();
+                    sleep(ninety);
+                    robot.stop();
+                } else {
+                    robot.turnLeft();
+                    sleep(ninety);
+                    robot.stop();
+                }
             }
 
             robot.setBanzaiPower(0.2);
@@ -389,11 +380,12 @@ public class Soup extends LinearOpMode {
             robot.liftEat.setPower(0);
 
             if (isChallenge && isEasy) {
-                robot.setAGenePower(basepower);
+                robot.setAGenePower(0.2);
                 sleep(200);
                 robot.stop();
                 //gyrosensor.calibrate();
                 //gyrosensor.resetZAxisIntegrator();
+                /*
                 while (heading > 81 || heading < 79) {
                     if (heading < 90 && heading > 70) {
                         robot.setTurnLeft(0.1);
@@ -403,21 +395,20 @@ public class Soup extends LinearOpMode {
                     }
                     heading = gyrosensor.getHeading();
                 }
-
-                //move foward
-                robot.setBanzaiPower(basepower);
+                */
+                robot.turnRight();
                 sleep(1100);
                 robot.stop();
-                //start eating
+                //move foward
                 robot.setBanzaiPower(0.2);
-                robot.eat();
-                sleep(3000);
-                robot.full();
+                sleep(1550);
                 robot.stop();
-
+                //start eating
+                AutoEat();
                 //turn back to 90 degrees
                 //gyrosensor.calibrate();
                 //gyrosensor.resetZAxisIntegrator();
+                /*
                 while (heading > 291 || heading < 289) {
                     if (heading < 300 && heading > 280) {
                         robot.setTurnRight(0.1);
@@ -427,9 +418,31 @@ public class Soup extends LinearOpMode {
                     }
                     heading = gyrosensor.getHeading();
                 }
-                robot.setBanzaiPower(basepower);
-                sleep(1400);
+                */
+                robot.turnRight();
+                sleep(2 * ninety);
                 robot.stop();
+
+                robot.setAGenePower(0.2);
+                sleep(400);
+                robot.stop();
+
+                robot.turnLeft();
+                sleep(ninety);
+                robot.stop();
+
+                robot.setBanzaiPower(0.2);
+                sleep(450);
+                robot.stop();
+
+                robot.turnLeft();
+                sleep(ninety);
+                robot.stop();
+
+                robot.setBanzaiPower(0.2);
+                sleep(1250);
+                robot.stop();
+
                 //spit out two
                 AutoVomit();
             }
@@ -451,5 +464,19 @@ public class Soup extends LinearOpMode {
         robot.full();
         robot.stop();
     }
-    //turn 180 degrees
+    public void AutoEat() {
+        robot.eat();
+        robot.setBanzaiPower(0.1);
+        sleep(1000);
+        robot.stop();
+
+        robot.setAGenePower(0.2);
+        sleep(750);
+        robot.stop();
+
+        robot.setBanzaiPower(0.1);
+        sleep(1000);
+        robot.full();
+        robot.stop();
+    }
 }
